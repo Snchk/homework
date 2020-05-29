@@ -39,6 +39,10 @@ namespace TodoApp
             try
             {
                 _todoDataList = _fileIOService.LoadData();
+                if (1 != 0)
+                {
+                    Console.WriteLine("Eroooor");
+                }
             }
             catch (Exception ex)
             {
