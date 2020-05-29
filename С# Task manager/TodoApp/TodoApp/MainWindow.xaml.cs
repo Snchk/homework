@@ -76,15 +76,7 @@ namespace TodoApp
 
             }
 
-            public void SaveData(object todoDataList)
-            {
-                using (StreamWriter writer = File.CreateText(PATH))
-                {
-                    string outpat = JsonConvert.SerializeObject(todoDataList);
-                    writer.Write(outpat);
-                }
-
-            }
+            
         }
     }
     private void _todoDataList_ListChanged(object sender, ListChangedEventArgs e)
@@ -107,5 +99,13 @@ namespace TodoApp
             }
 
         }
+    private readonly string PATH;
+
+    public FileIOServices(string path)
+    {
+        PATH = path;
     }
+
 }
+
+

@@ -14,7 +14,21 @@ namespace TodoApp.Models
 		private bool _isDone ;
 		private string _text;
 
-		
+		public BindingList<TodoModel> LoadData()
+		{
+			var fileExists = File.Exists(PATH);
+			if (!fileExists)
+			{
+				File.CreateText(PATH).Dispose();
+				return new BindingList<TodoModel>();
+			}
+			using (var reader = File.OpenText(PATH))
+			{
+				var fileText = reader.ReadToEnd();
+				return JsonConvert.DeserializeObject<BindingList<TodoModel>>(fileText);
+			}
+
+		}
 
 		public bool IsDone
 		{
@@ -40,11 +54,6 @@ namespace TodoApp.Models
 				
 			}
 		}
-		public event PropertyChangedEventHandler PropertyChanged;
-		protected virtual void OnPropertyChanged(string propertyName="")
-		{
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-			
-		}
+		
 	}
 }
