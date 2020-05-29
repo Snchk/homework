@@ -18,11 +18,11 @@ namespace TodoApp
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            var cultureInfo = new CultureInfo("ru-RU");
-            Thread.CurrentThread.CurrentCulture = cultureInfo;
-            Thread.CurrentThread.CurrentUICulture = cultureInfo;
-            CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
-            CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
+            var cultureInformation  = new CultureInfo("ru-RU");
+            Thread.CurrentThread.CurrentCulture = cultureInformation;
+            Thread.CurrentThread.CurrentUICulture = cultureInformation;
+            CultureInfo.DefaultThreadCurrentCulture = cultureInformation;
+            CultureInfo.DefaultThreadCurrentUICulture = cultureInformation;
             FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement),
                 new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
             base.OnStartup(e);
