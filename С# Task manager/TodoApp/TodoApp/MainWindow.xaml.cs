@@ -51,8 +51,43 @@ namespace TodoApp
             dgTodoList.ItemsSource = _todoDataList;
             _todoDataList.ListChanged += _todoDataList_ListChanged;
         }
+        class FileIOServices
+        {
 
-        private void _todoDataList_ListChanged(object sender, ListChangedEventArgs e)
+            private readonly string PATH;
+
+            public FileIOServices(string path)
+            {
+                PATH = path;
+            }
+            public BindingList<TodoModel> LoadData()
+            {
+                var fileExists = File.Exists(PATH);
+                if (!fileExists)
+                {
+                    File.CreateText(PATH).Dispose();
+                    return new BindingList<TodoModel>();
+                }
+                using (var reader = File.OpenText(PATH))
+                {
+                    var fileText = reader.ReadToEnd();
+                    return JsonConvert.DeserializeObject<BindingList<TodoModel>>(fileText);
+                }
+
+            }
+
+            public void SaveData(object todoDataList)
+            {
+                using (StreamWriter writer = File.CreateText(PATH))
+                {
+                    string outpat = JsonConvert.SerializeObject(todoDataList);
+                    writer.Write(outpat);
+                }
+
+            }
+        }
+    }
+    private void _todoDataList_ListChanged(object sender, ListChangedEventArgs e)
         {
             if (e.ListChangedType ==ListChangedType.ItemAdded || e.ListChangedType == ListChangedType.ItemDeleted || e.ListChangedType == ListChangedType.ItemChanged)
             {
